@@ -12,4 +12,13 @@ const { mix } = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+   .sass('resources/assets/sass/app.scss', 'public/css')
+   .styles([
+    //  'resources/assets/css/libs/bootstrap-rtl.css',
+     'resources/assets/css/libs/bootstrap.css',
+     'resources/assets/css/libs/sb-admin.css'
+   ], 'public/css/libs.css');
+  //  .scripts([
+  //    'resources/assets/js/libs/bootstrap.js',
+  //    'resources/assets/js/libs/jquery.js'
+  //  ], 'public/js/libs.js');
