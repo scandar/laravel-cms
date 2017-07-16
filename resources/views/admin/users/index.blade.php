@@ -7,6 +7,7 @@
         <tr>
           <th>User ID</th>
           <th>Name</th>
+          <th>Image</th>
           <th>Role</th>
           <th>Email</th>
           <th>Active</th>
@@ -19,6 +20,16 @@
           <tr>
             <td>{{$user->id}}</td>
             <td>{{$user->name}}</td>
+            @if ($user->photo)
+              @php
+              $path = Storage::url($user->photo->path)
+              @endphp
+            @else
+              @php
+              $path = Storage::url(App\Photo::find(1)->path)
+              @endphp
+            @endif
+            <td><img src="{{asset($path)}}" width="50"></td>
             <td>{{$user->role->name}}</td>
             <td>{{$user->email}}</td>
             <td>{{$user->is_active ? 'Yes':'No'}}</td>

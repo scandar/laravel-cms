@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-  {!! Form::open(['action' => 'AdminUsersController@store', 'class'=>'form-horizontal']) !!}
+  {!! Form::open(['action' => 'AdminUsersController@store', 'class'=>'form-horizontal', 'files'=>true]) !!}
     <div class="form-group">
       {{Form::label('name', 'Name:', ['class'=>'control-label col-sm-2'])}}
       <div class="col-sm-10">
@@ -24,6 +24,12 @@
       {{Form::label('password_confirmation', 'Confirm Password:', ['class'=>'control-label col-sm-2'])}}
       <div class="col-sm-10">
       {{Form::password('password_confirmation', ['placeholder'=>'Repeat Password', 'class'=>'form-control'])}}
+      </div>
+    </div>
+    <div class="form-group">
+      {{Form::label('photo', 'Photo:', ['class'=>'control-label col-sm-2'])}}
+      <div class="col-sm-10">
+        {{Form::file('photo', ['class'=>'form-control'])}}
       </div>
     </div>
     <div class="form-group">

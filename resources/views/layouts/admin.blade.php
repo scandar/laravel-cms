@@ -67,13 +67,13 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                   <li>
-                      <a href="javascript:;" data-toggle="collapse" data-target="#demo">Dropdown <i class="fa fa-fw fa-arrow-right"></i></a>
-                      <ul id="demo" class="collapse">
+                      <a href="javascript:;" data-toggle="collapse" data-target="#users">Users <i class="fa fa-fw fa-arrow-right"></i></a>
+                      <ul id="users" class="collapse">
                           <li>
-                              <a href="#">Dropdown Item</a>
+                              <a href="{{route('users.index')}}">View</a>
                           </li>
                           <li>
-                              <a href="#">Dropdown Item</a>
+                              <a href="{{route('users.create')}}">Create</a>
                           </li>
                       </ul>
                   </li>
