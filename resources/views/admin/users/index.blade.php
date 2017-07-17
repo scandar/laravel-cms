@@ -35,6 +35,7 @@
             <td>{{$user->is_active ? 'Yes':'No'}}</td>
             <td>{{$user->created_at->diffForHumans()}}</td>
             <td>{{$user->updated_at->diffForHumans()}}</td>
+            <td><a href="{{route('users.edit', $user) }}">Edit</a></td>
           </tr>
         @endforeach
       </tbody>

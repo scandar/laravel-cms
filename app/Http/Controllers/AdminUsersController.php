@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use App\Http\Requests\UsersRequest;
 use App\User;
 use App\Role;
+use Validator;
 
 class AdminUsersController extends Controller
 {
@@ -18,11 +21,6 @@ class AdminUsersController extends Controller
     public function index()
     {
       $users = User::all();
-
-      // foreach ($users as $user) {
-      //   var_dump($user->photo);
-      // }
-
       return view('admin.users.index', compact('users'));
     }
 
@@ -55,8 +53,6 @@ class AdminUsersController extends Controller
           'password' => bcrypt($request->password),
           'role_id' => $request->role_id
       ]);
-      // echo $request->all();
-      // return $request->photo;
       if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
         // $path = $request->photo->store('images');
         $path = Storage::put('public/images', $request->file('photo'));
@@ -84,7 +80,15 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
-      return view('admin.users.edit');
+      $user = User::findOrFail($id);
+
+      $roles = [];
+      $obj = Role::select('name','id')->get();
+      foreach ($obj as $role) {
+        $roles[$role->id] = $role->name;
+      }
+
+      return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -94,9 +98,34 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UsersRequest $request, $id)
     {
-        //
+      $user = User::findOrFail($id);
+      //empty password check
+      if (empty(trim($request->password))) {
+        $input = $request->except('password');
+      } else {
+        //password validation
+        if (Hash::check($request->old_password, $user->password)) {
+          $request['password'] = bcrypt($request->password);
+          $input = $request->all();
+        } else {
+          return redirect(route('users.edit', $user))
+              ->with('password', 'Wrong password!');
+        }
+      }
+      //user update
+      $user->update($input);
+      //image update/create
+      if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+        $path = Storage::put('public/images', $request->file('photo'));
+        if(!$user->photo) {
+          $user->photo()->create(['path'=>$path]);
+        } else {
+          $user->photo()->update(['path'=>$path]);
+        }
+      }
+      return redirect('admin/users');
     }
 
     /**

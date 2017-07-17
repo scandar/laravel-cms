@@ -1,9 +1,14 @@
-@if (count($errors))
+@if (count($errors) || session('password'))
   <div class="alert alert-danger">
     <ul>
-      @foreach ($errors->all() as $error)
-        <li>{{$error}}</li>
-      @endforeach
+      @if (count($errors))
+        @foreach ($errors->all() as $error)
+          <li>{{$error}}</li>
+        @endforeach
+      @endif
+      @if (session('password'))
+        <li>{{session('password')}}</li>
+      @endif
     </ul>
   </div>
 @endif

@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+  <h1 class="text-center">Create user!</h1>
   {!! Form::open(['action' => 'AdminUsersController@store', 'class'=>'form-horizontal', 'files'=>true]) !!}
     <div class="form-group">
       {{Form::label('name', 'Name:', ['class'=>'control-label col-sm-2'])}}
