@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Log;
 use App\Http\Requests\UsersRequest;
 use App\User;
 use App\Role;
-use Validator;
 
 class AdminUsersController extends Controller
 {
@@ -136,6 +135,13 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $user = User::find($id);
+      if ($user->photo) {
+        Storage::delete($user->photo->path);
+      }
+      if ($user->delete()) {
+        return redirect('admin/users')->with('success', 'User Deleted!');
+      }
+      return redirect('admin/users')->with('error', 'Something went wrong!');
     }
 }

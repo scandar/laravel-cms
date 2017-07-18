@@ -37,4 +37,12 @@ class User extends Authenticatable
     {
       return $this->hasOne('App\Photo');
     }
+    //Authentication
+    public function checkRole($role)
+    {
+      if ($this->role->name === $role) {
+        return true;
+      }
+      return false;
+    }
 }

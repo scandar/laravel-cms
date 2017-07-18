@@ -24,12 +24,7 @@ Route::get('/admin', function()
   return view('admin.index');
 });
 
-Route::resource('admin/users', 'AdminUsersController');
-
-Route::get('/image/{id}', function($id)
+Route::group(['middleware'=>'admin'], function()
 {
-  $path = User::find($id)->photo->path;
-  $path = Storage::url($path);
-  return "<img src='" .asset($path). "' />";
-  // return "<img src='/public/storage/images/tJCGdfQYvxh6OERmd2bM52l3ulfehp7gS9W8RBRD.jpeg' />";
+  Route::resource('admin/users', 'AdminUsersController');
 });
