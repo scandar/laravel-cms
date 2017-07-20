@@ -1,16 +1,6 @@
 @extends('layouts.admin')
-
 @section('content')
-  @if (session('success'))
-    <div class="alert alert-success">
-      <p>{{session('success')}}</p>
-    </div>
-  @endif
-  @if (session('error'))
-    <div class="alert alert-danger">
-      <p>{{session('error')}}</p>
-    </div>
-  @endif
+  @include('partials.feedback')
   @if ($users)
     <table class="table table-hover">
       <thead>

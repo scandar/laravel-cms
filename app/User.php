@@ -37,6 +37,11 @@ class User extends Authenticatable
     {
       return $this->hasOne('App\Photo');
     }
+
+    public function posts()
+    {
+      return $this->hasMany('App\Post');
+    }
     //Authentication
     public function checkRole($role)
     {
