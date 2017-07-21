@@ -10,6 +10,7 @@
           <th>Image</th>
           <th>Content</th>
           <th>Author</th>
+          <th>Tags</th>
           <th>Created</th>
           <th>Updated</th>
         </tr>
@@ -29,6 +30,15 @@
             @endif
             <td>{{substr($post->content,0,99)}}</td>
             <td>{{$post->user->name}}</td>
+            <td>
+              @if (!count($post->tags))
+                no tags
+              @else
+                @foreach ($post->tags as $tag)
+                  {{$tag->name}}
+                @endforeach
+              @endif
+            </td>
             <td>{{$post->created_at->diffForHumans()}}</td>
             <td>{{$post->updated_at->diffForHumans()}}</td>
             <td><a href="{{route('posts.edit', $post)}}" class="btn btn-info btn-sm">Edit</a></td>

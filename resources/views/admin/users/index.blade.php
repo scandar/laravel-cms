@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
   @include('partials.feedback')
-  @if ($users)
+  @if (count($users))
     <table class="table table-hover">
       <thead>
         <tr>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostsRequest;
 use App\Post;
+use App\Tag;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +30,11 @@ class AdminPostsController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $objs = Tag::select('name','id')->get();
+        foreach ($objs as $tag) {
+          $tags[$tag->id] = $tag->name;
+        }
+        return view('admin.posts.create', compact('tags'));
     }
 
     /**
@@ -48,6 +53,9 @@ class AdminPostsController extends Controller
       if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
         $path = Storage::put('public/images', $request->file('photo'));
         $post->photo()->create(['path'=>$path]);
+      }
+      if ($request->tag) {
+        $post->tags()->attach($request->tag);
       }
       return redirect('admin/posts');
     }
@@ -72,7 +80,11 @@ class AdminPostsController extends Controller
     public function edit($id)
     {
       $post = Post::findOrFail($id);
-      return view('admin.posts.edit', compact('post'));
+      $objs = Tag::select('name','id')->get();
+      foreach ($objs as $tag) {
+        $tags[$tag->id] = $tag->name;
+      }
+      return view('admin.posts.edit', compact('post','tags'));
     }
 
     /**
@@ -96,6 +108,9 @@ class AdminPostsController extends Controller
           } else {
             $post->photo()->update(['path'=>$path]);
           }
+        }
+        if ($request->tag) {
+          $post->tags()->sync($request->tag);
         }
 
         return redirect('admin/posts');
