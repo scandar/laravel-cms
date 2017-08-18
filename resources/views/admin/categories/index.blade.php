@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
   @include('partials.feedback')
-  @if (count($tags))
+  @if (count($categories))
     <table class="table table-hover">
       <thead>
         <tr>
@@ -12,15 +12,15 @@
         </tr>
       </thead>
       <tbody>
-        @foreach ($tags as $tag)
+        @foreach ($categories as $category)
           <tr>
-            <td>{{$tag->id}}</td>
-            <td>{{$tag->name}}</td>
-            <td>{{$tag->created_at}}</td>
-            <td>{{$tag->updated_at}}</td>
-            <td><a href="{{route('tags.edit', $tag)}}" class="btn btn-info btn-sm">Edit</a></td>
+            <td>{{$category->id}}</td>
+            <td>{{$category->name}}</td>
+            <td>{{$category->created_at}}</td>
+            <td>{{$category->updated_at}}</td>
+            <td><a href="{{route('categories.edit', $category)}}" class="btn btn-info btn-sm">Edit</a></td>
             <td>
-              {!!Form::open(['action'=>['AdminTagsController@destroy', $tag->id],'method'=>'DELETE'])!!}
+              {!!Form::open(['action'=>['AdminCategoriesController@destroy', $category->id],'method'=>'DELETE'])!!}
                 {!! Form::submit('Delete!',['class'=>'btn btn-sm btn-danger']) !!}
               {!!Form::close()!!}
             </td>

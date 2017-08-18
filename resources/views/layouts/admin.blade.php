@@ -88,6 +88,17 @@
                           </li>
                       </ul>
                   </li>
+                  <li>
+                      <a href="javascript:;" data-toggle="collapse" data-target="#categories">Categories <i class="fa fa-fw fa-arrow-right"></i></a>
+                      <ul id="categories" class="collapse">
+                          <li>
+                              <a href="{{route('categories.index')}}">View</a>
+                          </li>
+                          <li>
+                              <a href="{{route('categories.create')}}">Create</a>
+                          </li>
+                      </ul>
+                  </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

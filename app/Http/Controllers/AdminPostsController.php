@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostsRequest;
 use App\Post;
-use App\Tag;
+use App\Category;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,11 +30,11 @@ class AdminPostsController extends Controller
      */
     public function create()
     {
-        $objs = Tag::select('name','id')->get();
-        foreach ($objs as $tag) {
-          $tags[$tag->id] = $tag->name;
+        $objs = Category::select('name','id')->get();
+        foreach ($objs as $category) {
+          $categories[$category->id] = $category->name;
         }
-        return view('admin.posts.create', compact('tags'));
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -48,16 +48,16 @@ class AdminPostsController extends Controller
       $user = Auth::user();
       $post = $user->posts()->create([
           'title' => $request->title,
-          'content' => $request->content
+          'content' => $request->content,
+          'cat_id' => $request->cat_id,
       ]);
       if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
         $path = Storage::put('public/images', $request->file('photo'));
         $post->photo()->create(['path'=>$path]);
       }
-      if ($request->tag) {
-        $post->tags()->attach($request->tag);
-      }
+
       return redirect('admin/posts');
+      // return $request->all();
     }
 
     /**
@@ -80,11 +80,11 @@ class AdminPostsController extends Controller
     public function edit($id)
     {
       $post = Post::findOrFail($id);
-      $objs = Tag::select('name','id')->get();
-      foreach ($objs as $tag) {
-        $tags[$tag->id] = $tag->name;
+      $objs = Category::select('name','id')->get();
+      foreach ($objs as $category) {
+        $categories[$category->id] = $category->name;
       }
-      return view('admin.posts.edit', compact('post','tags'));
+      return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -99,7 +99,8 @@ class AdminPostsController extends Controller
         $post = Post::findOrFail($id);
         $post->update([
           'title' => $request->title,
-          'content' => $request->content
+          'content' => $request->content,
+          'cat_id' => $request->cat_id,
         ]);
         if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
           $path = Storage::put('public/images', $request->file('photo'));
@@ -108,9 +109,6 @@ class AdminPostsController extends Controller
           } else {
             $post->photo()->update(['path'=>$path]);
           }
-        }
-        if ($request->tag) {
-          $post->tags()->sync($request->tag);
         }
 
         return redirect('admin/posts');

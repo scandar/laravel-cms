@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-  <h1 class="text-center">Edit Tag: {{$tag->name}}</h1>
-  {!! Form::model($tag,['action' => ['AdminTagsController@update', $tag->id], 'class'=>'form-horizontal','method'=>'PATCH']) !!}
+  <h1 class="text-center">Edit Category: {{$category->name}}</h1>
+  {!! Form::model($category,['action' => ['AdminCategoriesController@update', $category->id], 'class'=>'form-horizontal','method'=>'PATCH']) !!}
     <div class="form-group">
-      {{Form::label('name', 'Tag Name:', ['class'=>'control-label col-sm-2'])}}
+      {{Form::label('name', 'Category Name:', ['class'=>'control-label col-sm-2'])}}
       <div class="col-sm-10">
         {{Form::text('name',null, ['placeholder'=>'Name', 'class'=>'form-control'])}}
       </div>

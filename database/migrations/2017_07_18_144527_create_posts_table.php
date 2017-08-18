@@ -22,6 +22,7 @@ class CreatePostsTable extends Migration
                   ->onDelete('cascade');
             $table->string('title');
             $table->text('content');
+            $table->integer('cat_id')->unsigned();
             $table->timestamps();
         });
     }

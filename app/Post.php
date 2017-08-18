@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['title', 'content', 'cat_id'];
 
     //relations
     public function photo()
@@ -18,8 +18,8 @@ class Post extends Model
     {
       return $this->belongsTo('App\User');
     }
-    public function tags()
+    public function category()
     {
-      return $this->morphToMany('App\Tag', 'taggable');
+      return $this->belongsTo('App\Category', 'cat_id');
     }
 }

@@ -28,7 +28,8 @@ class PostsRequest extends FormRequest
             {
               return [
                   'title' => 'required|string|max:255|',
-                  'content' => 'required|string|max:10000'
+                  'content' => 'required|string|max:10000',
+                  'cat_id' => 'required|integer',
               ];
             }
             break;
@@ -36,7 +37,8 @@ class PostsRequest extends FormRequest
             {
               return [
                   'title' => 'required|string|max:255|',
-                  'content' => 'required|string|max:10000'
+                  'content' => 'required|string|max:10000',
+                  'cat_id' => 'required|integer',
               ];
             }
             break;

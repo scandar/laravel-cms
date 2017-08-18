@@ -22,9 +22,9 @@
       </div>
     </div>
     <div class="form-group">
-      {{Form::label('tag', 'Role:', ['class'=>'control-label col-sm-2'])}}
+      {{Form::label('category', 'Role:', ['class'=>'control-label col-sm-2'])}}
       <div class="col-sm-10">
-        {{Form::select('tag',$tags,null,['placeholder'=>'tags', 'class'=>'form-control'])}}
+        {{Form::select('cat_id',$categories,null,['placeholder'=>'Category', 'class'=>'form-control'])}}
       </div>
     </div>
     <div class="form-group">

@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-  <h1 class="text-center">Create Tag!</h1>
-  {!! Form::open(['action' => 'AdminTagsController@store', 'class'=>'form-horizontal']) !!}
+  <h1 class="text-center">Create Category!</h1>
+  {!! Form::open(['action' => 'AdminCategoriesController@store', 'class'=>'form-horizontal']) !!}
     <div class="form-group">
-      {{Form::label('name', 'Tag Name:', ['class'=>'control-label col-sm-2'])}}
+      {{Form::label('name', 'Category Name:', ['class'=>'control-label col-sm-2'])}}
       <div class="col-sm-10">
         {{Form::text('name',null, ['placeholder'=>'Name', 'class'=>'form-control'])}}
       </div>
