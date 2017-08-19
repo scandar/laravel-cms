@@ -7,7 +7,10 @@
               @foreach ($posts as $post)
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h3>{{$post->title}} <small>{{$post->user->name}}</small></h3>
+                    <h3>
+                      <a href="{{route('posts.show', $post)}}">{{$post->title}}</a> 
+                      <small>{{$post->user->name}}</small>
+                    </h3>
                     <p class="text-muted">{{$post->created_at}}</p>
                   </div>
                   <div class="panel-body">

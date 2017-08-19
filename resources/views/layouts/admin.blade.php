@@ -99,6 +99,7 @@
                           </li>
                       </ul>
                   </li>
+                  <li><a href="{{route('comments.index')}}">Comments</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
