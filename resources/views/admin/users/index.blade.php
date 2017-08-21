@@ -19,7 +19,9 @@
         @foreach ($users as $user)
           <tr>
             <td>{{$user->id}}</td>
-            <td>{{$user->name}}</td>
+            <td>
+              <a href="{{ route('profile', $user->id) }}">{{$user->name}}</a>
+            </td>
             @if ($user->photo)
               @php
               $path = Storage::url($user->photo->path)

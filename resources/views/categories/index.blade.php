@@ -4,7 +4,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-             @include('partials.posts')
+        	@if (count($posts))
+				@include('partials.posts')
+        	@else
+				<h3 class="text-center">No Posts under this category :(</h3>
+        	@endif
         </div>
     </div>
 </div>

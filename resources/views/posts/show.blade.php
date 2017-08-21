@@ -1,14 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-	@if ($post->title)
+	@if ($post)
 		<div class="container">
 		    <div class="row">
 		        <div class="col-md-8 col-md-offset-2">
 	                <div class="panel panel-default">
 	                  <div class="panel-heading">
-	                    <h3>{{$post->title}} <small>{{$post->user->name}}</small></h3>
-	                    <p class="text-muted">{{$post->created_at}}</p>
+	                    <h3>{{ $post->title }} 
+	                    	<small>
+	                    		<a href="{{ route('profile', $post->user->id) }}">
+	                    			{{ $post->user->name }}
+	                    		</a>
+                    		</small>
+                    	</h3>
+	                    <p class="text-muted" title="{{ $post->created_at }}">{{$post->created_at->diffForHumans()}}</p>
 	                  </div>
 	                  <div class="panel-body">
 	                        @if ($post->photo)
@@ -18,45 +24,27 @@
 	                          <img src="{{asset($path)}}" class="img-responsive">
 	                        @endif
 	                        <p>{{$post->content}}</p>
+	                        <small>
+	                        	category: 
+	                        	<a href="{{ route('category', $post->category->name) }}">
+	                        		<mark>{{$post->category->name}}</mark>
+	                        	</a>
+	                        </small>
 	                   </div>
-	                  <div class="panel-body">
 
-	                        {!! Form::open(['action' => 'UserCommentsController@store', 
-	                        	'class'=>'form-horizontal']) !!}
-							    <div class="form-group">
-							      <div class="col-sm-12">
-								        {{Form::textarea('body',null, ['placeholder'=>'Leave a comment...', 'class'=>'form-control', 'rows'=>1])}}
-								        {{Form::hidden('post_id',$post->id)}}
-								        {{Form::submit('Comment!', ['class'=>'btn btn-primary btn-block'])}}
-							      </div>
-							    </div>
-						  	{!! Form::close() !!}
+	                  {{-- comment section --}}
+	                  <div class="panel-body">
+	                        @include('partials.commentinput')
 						<div class="row">
-							@if (count($post->comments))
-								@foreach ($post->comments as $comment)
-									<div class="col-sm-12">
-										<span class="lead">{{$comment->user->name}}</span> 
-										<p>{{$comment->body}}</p>
-											@if (Auth::user() && Auth::user()->id == $comment->user->id)
-												{!! Form::open([
-													'method' =>'DELETE',
-													'action' => [
-													'UserCommentsController@destroy', 
-													$comment->id],
-												]) !!}
-													{{Form::hidden('post_id',$post->id)}}
-											        {{Form::submit('Delete!', ['class'=>'btn btn-danger btn-sm'])}}
-										  		{!! Form::close() !!}
-											@endif
-										<hr>
-									</div>
-								@endforeach
-							@endif
+							<h4 class="text-center">Comments</h4>
+							@include('partials.comments')
 						</div>
 	                  </div>
 	                </div>
 		        </div>
 		    </div>
 		</div>
+	@else
+		<h3 class="text-center">we couldn't find what you're looking for :^(</h3>
 	@endif
 @endsection

@@ -15,7 +15,9 @@
         @foreach ($categories as $category)
           <tr>
             <td>{{$category->id}}</td>
-            <td>{{$category->name}}</td>
+            <td>
+              <a href="{{ route('category', $category->name) }}">{{$category->name}}</a>
+            </td>
             <td>{{$category->created_at}}</td>
             <td>{{$category->updated_at}}</td>
             <td><a href="{{route('categories.edit', $category)}}" class="btn btn-info btn-sm">Edit</a></td>

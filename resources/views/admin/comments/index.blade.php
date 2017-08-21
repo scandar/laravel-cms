@@ -15,10 +15,15 @@
       </thead>
       <tbody>
         @foreach ($comments as $comment)
+        <tr>
           <td>{{$comment->id}}</td>
           <td>{{$comment->body}}</td>
-          <td>{{$comment->user->name}}</td>
-          <td>{{$comment->post->title}}</td>
+          <td>
+            <a href="{{ route('profile', $comment->user->id) }}">{{$comment->user->name}}</a>
+          </td>
+          <td>
+            <a href="{{ route('posts.show', $comment->post->id) }}">{{$comment->post->title}}</a>
+          </td>
           <td>{{$comment->created_at}}</td>
           <td>{{$comment->updated_at}}</td>
           <td>
@@ -26,6 +31,7 @@
               {{Form::submit('Delete',['class'=>'btn btn-danger btn-sm'])}}
             {!! Form::close() !!}
           </td>
+        </tr>
         @endforeach
       </tbody>
     </table>

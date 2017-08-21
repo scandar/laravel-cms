@@ -27,7 +27,7 @@ class AdminCatRequest extends FormRequest
         case 'POST':
           {
             return [
-              'name' => 'required|string|max:255|min:3'
+              'name' => 'required|string|max:255|min:3|unique:categories'
             ];
           }
           break;
